@@ -1,0 +1,103 @@
+root{
+    background-color: #fff;
+}
+
+.root{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.tooltip {
+    position: relative;
+    display: inline;
+  }
+.hide{
+    display: none;
+}
+  .tooltip .tooltiptext {
+    visibility: hidden;
+    width: 140px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1;
+    bottom: 150%;
+    left: 50%;
+    margin-left: -75px;
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  .tooltip .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+  
+  .tooltip:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+  }
+.header > h1{
+    size: 20;
+    font-family:Georgia, 'Times New Roman', Times, serif;
+    font-weight: 600;
+    color:#544aba;
+    align-items: center;
+}
+.container{
+    display: flex;
+    flex-direction: column;
+    background-color: #fffe;
+    box-shadow: 1px 1px 8px 1px darkgrey;
+    padding: 3vh 6vh;
+    border-radius: .5rem;
+    align-items: center;
+}
+.container > h2{
+    font-size: xx-large;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    color: #2d2b47;
+    font-weight: 900;
+}
+.button{
+    width: auto;
+    border: none;
+    padding: auto;
+    background-color: #544aba;
+    color: whitesmoke;
+}
+.link{
+    margin-top: 1vh;
+    font-size: medium;
+    padding: .3rem .4rem;
+    border-radius: .4rem;
+}
+.output{
+    display: flex;
+    margin-top: 20px;
+    align-items: center;
+    row-gap: 1;
+    flex-direction: column;
+}
+input{
+    border: 1px solid darkgrey;
+    border-radius: .4rem;
+    width: 15vw;
+    height: 5vh;
+    padding: .3rem 1rem;
+    font-size: 2vh;
+}
+
+.button:hover{
+    background-color: #3f3a85;
+}
