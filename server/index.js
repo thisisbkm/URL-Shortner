@@ -17,10 +17,8 @@ app.post("/api/short",async (req, res)=>{
     else{
         try{
             const check = await shorturl.findOne({oriUrl:body});
-            if(check!=null){ 
-                check.clicks+=1;
+            if(check!=null){
                 res.json(check);
-                await check.save();
             }
             else{
                 try{
@@ -46,8 +44,9 @@ app.get("/:id",async (req, res)=>{
     const url = await shorturl.findOne({shoUrl:id});
     if(url!=null){
         // console.log(url.oriUrl);
-        
+        url.clicks+=1
         res.redirect(url.oriUrl);
+        await url.save();
     }else
     res.sendFile(path.resolve(__dirname,"../client/404.html"));
 })

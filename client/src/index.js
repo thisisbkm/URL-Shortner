@@ -35,7 +35,7 @@ form.addEventListener("submit", async (e) => {
         output.href = base + data.shoUrl;
         console.log(data);
         output.innerText = base + data.shoUrl;
-        document.querySelector(".output").appendChild(document.createElement("h2").appendChild(document.createTextNode(`Number of clicks ${data.clicks}`)));
+        document.getElementById("noclicks").innerText = `Number of clicks ${data.clicks}`;
         document.querySelectorAll(".hide").forEach((e)=>{
             e.classList.remove("hide");
         })
