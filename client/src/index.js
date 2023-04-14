@@ -15,6 +15,7 @@ function outFunc() {
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
     var originalUrl = document.getElementById("originalLink").value;
+    if(originalUrl.trim()==""){alert("Entered Link Must not be empty !!");return;}
     const body = JSON.stringify({ "url": originalUrl });
     // console.log(body)
     fetch("/api/short", {
@@ -29,9 +30,12 @@ form.addEventListener("submit", async (e) => {
         const output = document.getElementById("out");
         const data = await res.json();
         // console.log(data);
+        if(data.error!=undefined){alert(data.error);return;}
         const base = window.location.href;
-        output.href = base + data.short;
-        output.innerText = base + data.short;
+        output.href = base + data.shoUrl;
+        console.log(data);
+        output.innerText = base + data.shoUrl;
+        document.querySelector(".output").appendChild(document.createElement("h2").appendChild(document.createTextNode(`Number of clicks ${data.clicks}`)));
         document.querySelectorAll(".hide").forEach((e)=>{
             e.classList.remove("hide");
         })

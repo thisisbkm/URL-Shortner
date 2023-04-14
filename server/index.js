@@ -1,7 +1,7 @@
 let {shorturl} = require('./database');
 const {nanoid} = require('nanoid');
 const express = require('express');
-const bodyParser = require('body-parser');
+const URL = require('url').URL;
 require('dotenv').config()
 const port = process.env.PORT;
 const path = require('path')
@@ -16,19 +16,27 @@ app.post("/api/short",async (req, res)=>{
     if(body==undefined) res.json({"KeyError": "The key for the original url must be url"});
     else{
         try{
-            // console.log(req);
-            // console.log(body);
             const check = await shorturl.findOne({oriUrl:body});
-            if(check!=null) res.json({"short":check.shoUrl})
+            if(check!=null){ 
+                check.clicks+=1;
+                res.json(check);
+                await check.save();
+            }
             else{
-                let doc = new shorturl({
-                    oriUrl:body,
-                    shoUrl:urlId
-                })
-                doc.save().then((doc)=>res.json({"short":urlId}));
+                try{
+                    new URL(body);
+                    let doc = new shorturl({
+                        oriUrl:body,
+                        shoUrl:urlId
+                    })
+                    doc.save().then((doc)=>res.json(doc));
+                }
+                catch{
+                    res.json({error:"Please Enter a valid url"});
+                }
             }
         }catch(err){
-            res.json("Some Error Occured")
+            res.json({"error":"Some Error Occured"})
         }
     }
 })
@@ -38,11 +46,24 @@ app.get("/:id",async (req, res)=>{
     const url = await shorturl.findOne({shoUrl:id});
     if(url!=null){
         // console.log(url.oriUrl);
+        
         res.redirect(url.oriUrl);
     }else
     res.sendFile(path.resolve(__dirname,"../client/404.html"));
 })
 
+
+app.get("/clicks/:id", async (req, res)=>{
+    const id = req.params.id;
+    const url = await shorturl.findOne({shoUrl:id});
+    if(url!=null){
+        url.clicks+=1;
+        res.json(url);
+        await url.save();
+    }else{
+        res.json({"error": "shorturl doesn't exist!"});
+    }
+})
 
 
 app.get("*", (req, res)=>{
